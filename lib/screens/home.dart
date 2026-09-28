@@ -7,6 +7,7 @@ import 'package:luxury_fashion_app/widgets/custom_text.dart';
 
 import '../data/data_cover_model.dart';
 import '../data/data_product_model.dart';
+import 'checkout.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -92,41 +93,53 @@ class Home extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final item = ProductData.products[index];
 
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset(
-                                  item.image,
-                                  width: double.infinity,
-                                  height: 300,
-                                  fit: BoxFit.cover,
-                                ),
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,MaterialPageRoute(builder: (c)=>Checkout(
+                                  image: item.image,
+                                  name: item.name,
+                                  price: item.price,
+                                  description: item.description,
+                                )),
+                                );
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Image.asset(
+                                    item.image,
+                                    width: double.infinity,
+                                    height: 300,
+                                    fit: BoxFit.cover,
+                                  ),
 
-                                const Gap(8),
+                                  const Gap(8),
 
-                                CustomText(
-                                  text: item.name,
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                                  CustomText(
+                                    text: item.name,
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.normal,
+                                  ),
 
-                                CustomText(
-                                  text: item.description,
-                                  fontSize: 14,
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                                  CustomText(
+                                    text: item.description,
+                                    fontSize: 14,
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w700,
+                                  ),
 
-                                const Gap(9),
+                                  const Gap(9),
 
-                                CustomText(
-                                  text: '\$ ${item.price}',
-                                  fontSize: 20,
-                                  color: Colors.red.shade200,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ],
+                                  CustomText(
+                                    text: '\$ ${item.price}',
+                                    fontSize: 20,
+                                    color: Colors.red.shade200,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ],
+                              ),
                             );
                           },
                         ),
@@ -159,7 +172,6 @@ class Home extends StatelessWidget {
                             itemCount: DataCoverModel.covers.length,
                             itemBuilder: (context, index) {
                               final item = DataCoverModel.covers[index];
-
                               return Padding(
                                 padding: const EdgeInsets.only(right: 15),
                                 child: Column(
@@ -197,36 +209,90 @@ class Home extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Ionicons.logoTwitter,color: Colors.white,size: 30,),
+                                  Icon(
+                                    Ionicons.logoTwitter,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
                                   Gap(50),
-                                  Icon(Ionicons.logoInstagram,color: Colors.white,size: 30,),
+                                  Icon(
+                                    Ionicons.logoInstagram,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
                                   Gap(50),
-                                  Icon(Ionicons.logoFacebook,color: Colors.white,size: 30,),
+                                  Icon(
+                                    Ionicons.logoFacebook,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
                                 ],
                               ),
                               Gap(15),
-                              Image.asset('assets/svgs/line.png', width: 230,height: 10,fit: BoxFit.fill,color: Colors.white,),
+                              Image.asset(
+                                'assets/svgs/line.png',
+                                width: 230,
+                                height: 10,
+                                fit: BoxFit.fill,
+                                color: Colors.white,
+                              ),
                               Gap(30),
-                              CustomText(text: 'support@openui.design', fontSize: 20, color: Colors.white, fontWeight: FontWeight.w500),
+                              CustomText(
+                                text: 'support@openui.design',
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
                               Gap(5),
-                              CustomText(text: '+60 825 876', fontSize: 20, color: Colors.white, fontWeight: FontWeight.w500),
+                              CustomText(
+                                text: '+60 825 876',
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
                               Gap(5),
-                              CustomText(text: '08:00 - 22:00 - Everyday', fontSize: 20, color: Colors.white, fontWeight: FontWeight.w500),
+                              CustomText(
+                                text: '08:00 - 22:00 - Everyday',
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
                               Gap(30),
-                              Image.asset('assets/svgs/line.png', width: 230,height: 10,fit: BoxFit.fill,color: Colors.white,),
+                              Image.asset(
+                                'assets/svgs/line.png',
+                                width: 230,
+                                height: 10,
+                                fit: BoxFit.fill,
+                                color: Colors.white,
+                              ),
                               Gap(40),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
-                                  CustomText(text: 'About', fontSize: 20, color: Colors.white, fontWeight: FontWeight.w500),
-                                  CustomText(text: 'Contact', fontSize: 20, color: Colors.white, fontWeight: FontWeight.w500),
-                                  CustomText(text: 'Blog', fontSize: 20, color: Colors.white, fontWeight: FontWeight.w500),
+                                  CustomText(
+                                    text: 'About',
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  CustomText(
+                                    text: 'Contact',
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  CustomText(
+                                    text: 'Blog',
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ],
                               ),
                             ],
                           ),
                         ),
-
                       ],
                     ),
                   ),
