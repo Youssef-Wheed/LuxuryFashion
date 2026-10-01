@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:luxury_fashion_app/screens/place_order.dart';
+import 'package:luxury_fashion_app/widgets/custom_button.dart';
+import 'package:luxury_fashion_app/widgets/custom_card_order.dart';
 import 'package:luxury_fashion_app/widgets/custom_header.dart';
 import 'package:luxury_fashion_app/widgets/custom_text.dart';
 
 import '../widgets/custom_appbar.dart';
 
-class Checkout extends StatelessWidget {
+class Checkout extends StatefulWidget {
   const Checkout({
     super.key,
     required this.image,
@@ -20,6 +23,12 @@ class Checkout extends StatelessWidget {
   final String description;
 
   @override
+  State<Checkout> createState() => _CheckoutState();
+}
+
+class _CheckoutState extends State<Checkout> {
+  int slectedQty = 1;
+  @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -30,50 +39,61 @@ class Checkout extends StatelessWidget {
           children: [
             Gap(20),
             CustomHeader(name: 'Checkout'),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset(image, width: 130),
-                Gap(10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Gap(10),
-                    CustomText(
-                      text: name.toUpperCase(),
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    Gap(10),
-                    SizedBox(
-                      width: screenWidth * 0.5,
-                      child: CustomText(
-                        text: description,
-                        fontSize: 15,
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    Gap(30),
-                    Row(
-                      children: [
-                        qty(() {}, 'assets/svgs/min.svg'),
-                        Gap(12),
-                        CustomText(
-                          text: "1",
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        Gap(12),
-                        qty(() {}, 'assets/svgs/plus.svg'),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+            CustomCardOrder(
+              image: widget.image,
+              name: widget.name,
+              price: widget.price,
+              description: widget.description,
+              onChanged: (v) {
+                setState(() {
+                  slectedQty = v;
+                });
+              },
             ),
+            promo(),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomText(
+                    text: 'Est. Total'.toUpperCase(),
+                    spacing: 5,
+                    fontSize: 18,
+                    color: Color(0xff333333),
+                    fontWeight: FontWeight.bold,
+                  ),
+                  CustomText(
+                    text: '\$ ${widget.price * slectedQty}',
+                    fontSize: 22,
+                    color: Colors.red.shade200,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ],
+              ),
+            ),
+            Gap(20),
+            CustomButton(
+              text: "Checkout",
+              image: true,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (c) => PlaceOrder(
+                      image: widget.image,
+                      name: widget.name,
+                      price: widget.price,
+                      description: widget.description,
+                      quantity: slectedQty,
+                      total: (widget.price * slectedQty),
+                    ),
+                  ),
+                );
+              },
+            ),
+            Gap(20),
           ],
         ),
       ),
@@ -81,19 +101,54 @@ class Checkout extends StatelessWidget {
   }
 }
 
-Widget qty(ontap, svg) {
-  return GestureDetector(
-    onTap: ontap,
-    child: Padding(
-      padding: const EdgeInsets.all(3),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          shape: BoxShape.circle,
-          border: Border.all(color: Colors.grey.shade400, width: 1),
+Widget promo() {
+  return Column(
+    children: [
+      Gap(20),
+      Divider(),
+      Gap(15),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        child: Row(
+          children: [
+            SvgPicture.asset('assets/svgs/promo.svg', width: 25),
+            Gap(20),
+            CustomText(
+              text: 'Add promo code',
+              fontSize: 18,
+              color: Color(0xff333333),
+              fontWeight: FontWeight.w500,
+            ),
+          ],
         ),
-        child: SvgPicture.asset(svg),
       ),
-    ),
+      Gap(15),
+      Divider(),
+      Gap(15),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        child: Row(
+          children: [
+            SvgPicture.asset('assets/svgs/delivery.svg', width: 25),
+            Gap(20),
+            CustomText(
+              text: 'Delivery',
+              fontSize: 18,
+              color: Color(0xff333333),
+              fontWeight: FontWeight.w500,
+            ),
+            Spacer(),
+            CustomText(
+              text: 'Free'.toUpperCase(),
+              fontSize: 18,
+              color: Color(0xff333333),
+              fontWeight: FontWeight.w500,
+            ),
+          ],
+        ),
+      ),
+      Gap(15),
+      Divider(),
+    ],
   );
 }
