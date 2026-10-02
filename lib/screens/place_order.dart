@@ -50,20 +50,27 @@ class PlaceOrder extends StatelessWidget {
               ),
             ),
             CustomText(text: 'Shipping adress'.toUpperCase(), fontSize: 18, color: Color(0xff888888), fontWeight: FontWeight.w600),
-            Gap(20),
-            CustomText(text: 'Iris Watson'.toUpperCase(), fontSize: 20, color: Color(0xff1A1A1A), fontWeight: FontWeight.w900),
+            Gap(15),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: CustomText(text: 'Iris Watson'.toUpperCase(), fontSize: 20, color: Color(0xff1A1A1A), fontWeight: FontWeight.w900),
+            ),
             Row(
               children: [
-                Column(
-                  children: [
-                    Gap(15),
-                    CustomText(text: '606-3727 Ullamcorper. Street'.toUpperCase(), fontSize: 15, color: Color(0xff555555), fontWeight: FontWeight.w400),
-                    Gap(10),
-                    CustomText(text: 'Roseville NH 11523'.toUpperCase(), fontSize: 15, color: Color(0xff555555), fontWeight: FontWeight.w400),
-                    Gap(10),
-                    CustomText(text: '(786) 713-8616'.toUpperCase(), fontSize: 15, color: Color(0xff555555), fontWeight: FontWeight.w400),
-                    Gap(10),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Gap(10),
+                      CustomText(text: '606-3727 Ullamcorper. Street'.toUpperCase(), fontSize: 15, color: Color(0xff555555), fontWeight: FontWeight.w400),
+                      Gap(6),
+                      CustomText(text: 'Roseville NH 11523'.toUpperCase(), fontSize: 15, color: Color(0xff555555), fontWeight: FontWeight.w400),
+                      Gap(6),
+                      CustomText(text: '(786) 713-8616'.toUpperCase(), fontSize: 15, color: Color(0xff555555), fontWeight: FontWeight.w400),
+                      Gap(6),
+                    ],
+                  ),
                 ),
                 Spacer(),
                 SvgPicture.asset('assets/svgs/arrow.svg', width: 25),
