@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:luxury_fashion_app/widgets/custom_text.dart';
 
@@ -25,27 +26,52 @@ class PlaceOrder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppbar(isBlack: false),
-      body: Column(
-        children: [
-          Gap(20),
-          Center(
-            child: CustomText(
-              text: 'Checkout'.toUpperCase(),
-              spacing: 5,
-              fontSize: 20,
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Gap(20),
+            Center(
+              child: CustomText(
+                text: 'Checkout'.toUpperCase(),
+                spacing: 5,
+                fontSize: 20,
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-          ),
-          Gap(5),
-          Center(
-            child: Image.asset(
-              'assets/svgs/line.png',
-              width: 190,
-              color: Color(0xff555555),
+            Gap(5),
+            Center(
+              child: Image.asset(
+                'assets/svgs/line.png',
+                width: 190,
+                color: Color(0xff555555),
+              ),
             ),
-          ),
-        ],
+            CustomText(text: 'Shipping adress'.toUpperCase(), fontSize: 18, color: Color(0xff888888), fontWeight: FontWeight.w600),
+            Gap(20),
+            CustomText(text: 'Iris Watson'.toUpperCase(), fontSize: 20, color: Color(0xff1A1A1A), fontWeight: FontWeight.w900),
+            Row(
+              children: [
+                Column(
+                  children: [
+                    Gap(15),
+                    CustomText(text: '606-3727 Ullamcorper. Street'.toUpperCase(), fontSize: 15, color: Color(0xff555555), fontWeight: FontWeight.w400),
+                    Gap(10),
+                    CustomText(text: 'Roseville NH 11523'.toUpperCase(), fontSize: 15, color: Color(0xff555555), fontWeight: FontWeight.w400),
+                    Gap(10),
+                    CustomText(text: '(786) 713-8616'.toUpperCase(), fontSize: 15, color: Color(0xff555555), fontWeight: FontWeight.w400),
+                    Gap(10),
+                  ],
+                ),
+                Spacer(),
+                SvgPicture.asset('assets/svgs/arrow.svg', width: 25),
+              ],
+            ),
+
+          ],
+        ),
       ),
     );
   }
