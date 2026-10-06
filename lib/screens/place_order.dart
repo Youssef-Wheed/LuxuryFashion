@@ -5,9 +5,10 @@ import 'package:luxury_fashion_app/widgets/custom_text.dart';
 
 import '../widgets/custom_appbar.dart';
 import '../widgets/custom_button.dart';
+import '../widgets/custom_shipping_method.dart';
 import 'add_address.dart';
 
-class PlaceOrder extends StatelessWidget {
+class PlaceOrder extends StatefulWidget {
   const PlaceOrder({
     super.key,
     required this.image,
@@ -23,6 +24,36 @@ class PlaceOrder extends StatelessWidget {
   final String description;
   final int quantity;
   final double total;
+
+  @override
+  State<PlaceOrder> createState() => _PlaceOrderState();
+}
+
+class _PlaceOrderState extends State<PlaceOrder> {
+  dynamic _savedAddress;
+
+  void _openAddress(context) async {
+    final addressData = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (c) => AddAdress()),
+    );
+    if (addressData != null) {
+      setState(() {
+        _savedAddress = addressData;
+      });
+    }
+  }
+
+  void _editAddress() async {
+    final newAddress = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (c) => AddAdress(editData: _savedAddress)),
+    );
+
+    setState(() {
+      _savedAddress = newAddress;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,81 +88,90 @@ class PlaceOrder extends StatelessWidget {
               color: Color(0xff888888),
               fontWeight: FontWeight.w600,
             ),
+
             Gap(15),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: CustomText(
-                text: 'Iris Watson'.toUpperCase(),
-                fontSize: 20,
-                color: Color(0xff1A1A1A),
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Gap(10),
-                      CustomText(
-                        text: '606-3727 Ullamcorper. Street'.toUpperCase(),
-                        fontSize: 15,
-                        color: Color(0xff555555),
-                        fontWeight: FontWeight.w400,
-                      ),
-                      Gap(6),
-                      CustomText(
-                        text: 'Roseville NH 11523'.toUpperCase(),
-                        fontSize: 15,
-                        color: Color(0xff555555),
-                        fontWeight: FontWeight.w400,
-                      ),
-                      Gap(6),
-                      CustomText(
-                        text: '(786) 713-8616'.toUpperCase(),
-                        fontSize: 15,
-                        color: Color(0xff555555),
-                        fontWeight: FontWeight.w400,
-                      ),
-                      Gap(6),
-                    ],
-                  ),
-                ),
-                Spacer(),
-                SvgPicture.asset('assets/svgs/arrow.svg', width: 25),
-              ],
-            ),
-            Gap(20),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,MaterialPageRoute(builder: (c)=>AddAdress()));
-                  },
-                  child: customContainer(
-                    'Add shipping adress',
-                    false,
-                    'assets/svgs/plus.svg',
-                  ),
-                ),
+                _savedAddress != null
+                    ? GestureDetector(
+                        onTap: () {
+                          _editAddress();
+                        },
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20.0,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomText(
+                                    text:
+                                        "${_savedAddress['firstName'] + " " + _savedAddress['lastName']}"
+                                            .toUpperCase(),
+                                    fontSize: 20,
+                                    color: Color(0xff1A1A1A),
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                  CustomText(
+                                    text:
+                                        "${_savedAddress['address'] + " " + _savedAddress['city']}"
+                                            .toUpperCase(),
+                                    fontSize: 15,
+                                    color: Color(0xff555555),
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  Gap(6),
+                                  CustomText(
+                                    text:
+                                        "${_savedAddress['state'] + " " + _savedAddress['zipCode']}"
+                                            .toUpperCase(),
+                                    fontSize: 15,
+                                    color: Color(0xff555555),
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  Gap(6),
+                                  CustomText(
+                                    text: "${_savedAddress['phone']}"
+                                        .toUpperCase(),
+                                    fontSize: 15,
+                                    color: Color(0xff555555),
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  Gap(6),
+                                ],
+                              ),
+                            ),
+                            Spacer(),
+                            SvgPicture.asset(
+                              'assets/svgs/arrow.svg',
+                              width: 25,
+                            ),
+                          ],
+                        ),
+                      )
+                    : SizedBox.shrink(),
+                _savedAddress == null
+                    ? GestureDetector(
+                        onTap: () {
+                          _openAddress(context);
+                        },
+                        child: customContainer(
+                          'Add shipping adress',
+                          false,
+                          'assets/svgs/plus.svg',
+                        ),
+                      )
+                    : SizedBox.shrink(),
                 Gap(30),
 
-                CustomText(
-                  text: 'Shipping Method'.toUpperCase(),
-                  fontSize: 18,
-                  color: Color(0xff888888),
-                  fontWeight: FontWeight.w600,
-                ),
-                Gap(10),
-                customContainer(
-                  'Pickup at store',
-                  true,
-                  'assets/svgs/downarrow.svg',
-                ),
+                // shipping method
+                CustomShippingMethod(),
                 Gap(30),
+
+                //payment method
                 CustomText(
                   text: 'Payment method'.toUpperCase(),
                   fontSize: 18,
@@ -139,10 +179,7 @@ class PlaceOrder extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
                 Gap(10),
-                customContainer(
-                  'select payment method',
-                  false,
-                  'assets/svgs/downarrow.svg',
+                customContainer('select payment method', false, 'assets/svgs/downarrow.svg',
                 ),
               ],
             ),
@@ -161,7 +198,7 @@ class PlaceOrder extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   CustomText(
-                    text: '\$ ${total}',
+                    text: '\$ ${widget.total}',
                     fontSize: 22,
                     color: Colors.red.shade200,
                     fontWeight: FontWeight.bold,
@@ -170,15 +207,8 @@ class PlaceOrder extends StatelessWidget {
               ),
             ),
             Gap(20),
-            CustomButton(
-              text: "Place Order",
-              image: true,
-              onTap: () {
-
-              },
-            ),
+            CustomButton(text: "Place Order", image: true, onTap: () {}),
             Gap(20),
-
           ],
         ),
       ),

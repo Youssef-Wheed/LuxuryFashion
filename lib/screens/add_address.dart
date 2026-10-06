@@ -7,7 +7,9 @@ import '../widgets/custom_text.dart';
 import '../widgets/custom_text_field.dart';
 
 class AddAdress extends StatefulWidget {
-  const AddAdress({super.key});
+  const AddAdress({super.key, this.editData});
+
+  final dynamic editData;
 
   @override
   State<AddAdress> createState() => _AddAdressState();
@@ -36,6 +38,20 @@ class _AddAdressState extends State<AddAdress> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    if (widget.editData != null) {
+      firstNameController.text = widget.editData['firstName'] ?? "";
+      lastNameController.text = widget.editData['lastName'] ?? "";
+      addressController.text = widget.editData['address'] ?? "";
+      cityController.text = widget.editData['city'] ?? "";
+      stateController.text = widget.editData['state'] ?? "";
+      zipCodeController.text = widget.editData['zipCode'] ?? "";
+      phoneController.text = widget.editData['phone'] ?? "";
+    }
+    super.initState();
+  }
+
   String? _required(String? value, String field) {
     if (value == null || value.trim().isEmpty) {
       return '$field is required';
@@ -47,7 +63,6 @@ class _AddAdressState extends State<AddAdress> {
     FocusScope.of(context).unfocus();
 
     if (_formKey.currentState!.validate()) {
-      // البيانات سليمة، خد القيم من الـ controllers
       final firstName = firstNameController.text.trim();
       final lastName = lastNameController.text.trim();
       final address = addressController.text.trim();
@@ -55,8 +70,6 @@ class _AddAdressState extends State<AddAdress> {
       final state = stateController.text.trim();
       final zip = zipCodeController.text.trim();
       final phone = phoneController.text.trim();
-
-
     }
   }
 
@@ -183,13 +196,28 @@ class _AddAdressState extends State<AddAdress> {
               ),
             ),
 
-            // Save button (ثابت تحت)
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 15),
               child: CustomButton(
                 text: "Add now",
                 image: false,
-                onTap: _onSave,
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    final data = {
+                      'firstName': firstNameController.text,
+                      'lastName': lastNameController.text,
+                      'address': addressController.text,
+                      'city': cityController.text,
+                      'state': stateController.text,
+                      'zipCode': zipCodeController.text,
+                      'phone': phoneController.text,
+                    };
+                    Navigator.pop(context,data);
+                  } else {
+                    return;
+                  }
+                },
               ),
             ),
           ],
