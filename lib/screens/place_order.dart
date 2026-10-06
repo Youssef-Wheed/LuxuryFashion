@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:luxury_fashion_app/widgets/custom_text.dart';
-
+import '../widgets/custom_address_info.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_shipping_method.dart';
@@ -94,64 +94,10 @@ class _PlaceOrderState extends State<PlaceOrder> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _savedAddress != null
-                    ? GestureDetector(
-                        onTap: () {
-                          _editAddress();
-                        },
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20.0,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomText(
-                                    text:
-                                        "${_savedAddress['firstName'] + " " + _savedAddress['lastName']}"
-                                            .toUpperCase(),
-                                    fontSize: 20,
-                                    color: Color(0xff1A1A1A),
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                  CustomText(
-                                    text:
-                                        "${_savedAddress['address'] + " " + _savedAddress['city']}"
-                                            .toUpperCase(),
-                                    fontSize: 15,
-                                    color: Color(0xff555555),
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  Gap(6),
-                                  CustomText(
-                                    text:
-                                        "${_savedAddress['state'] + " " + _savedAddress['zipCode']}"
-                                            .toUpperCase(),
-                                    fontSize: 15,
-                                    color: Color(0xff555555),
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  Gap(6),
-                                  CustomText(
-                                    text: "${_savedAddress['phone']}"
-                                        .toUpperCase(),
-                                    fontSize: 15,
-                                    color: Color(0xff555555),
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  Gap(6),
-                                ],
-                              ),
-                            ),
-                            Spacer(),
-                            SvgPicture.asset(
-                              'assets/svgs/arrow.svg',
-                              width: 25,
-                            ),
-                          ],
-                        ),
-                      )
+                    ? CustomAddressInfo(
+                  saveAdress: _savedAddress,
+                  onTap: _editAddress,
+                )
                     : SizedBox.shrink(),
                 _savedAddress == null
                     ? GestureDetector(
