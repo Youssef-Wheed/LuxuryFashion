@@ -4,6 +4,8 @@ import 'package:gap/gap.dart';
 import 'package:luxury_fashion_app/widgets/custom_text.dart';
 
 import '../widgets/custom_appbar.dart';
+import '../widgets/custom_button.dart';
+import 'add_address.dart';
 
 class PlaceOrder extends StatelessWidget {
   const PlaceOrder({
@@ -105,10 +107,15 @@ class PlaceOrder extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                customContainer(
-                  'Add shipping adress',
-                  false,
-                  'assets/svgs/plus.svg',
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,MaterialPageRoute(builder: (c)=>AddAdress()));
+                  },
+                  child: customContainer(
+                    'Add shipping adress',
+                    false,
+                    'assets/svgs/plus.svg',
+                  ),
                 ),
                 Gap(30),
 
@@ -139,6 +146,38 @@ class PlaceOrder extends StatelessWidget {
                 ),
               ],
             ),
+            Spacer(),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomText(
+                    text: 'Total'.toUpperCase(),
+                    spacing: 5,
+                    fontSize: 18,
+                    color: Color(0xff333333),
+                    fontWeight: FontWeight.bold,
+                  ),
+                  CustomText(
+                    text: '\$ ${total}',
+                    fontSize: 22,
+                    color: Colors.red.shade200,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ],
+              ),
+            ),
+            Gap(20),
+            CustomButton(
+              text: "Place Order",
+              image: true,
+              onTap: () {
+
+              },
+            ),
+            Gap(20),
 
           ],
         ),
