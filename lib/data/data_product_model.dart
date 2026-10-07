@@ -1,7 +1,7 @@
 import '../models/product_model.dart';
 
 class ProductData {
- static List<ProductModel> products = [
+  static List<ProductModel> products = [
     ProductModel(
       image: 'assets/product/product1.png',
       name: 'October collection',
