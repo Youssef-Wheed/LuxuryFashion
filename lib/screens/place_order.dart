@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:luxury_fashion_app/widgets/custom_text.dart';
+
 import '../widgets/custom_address_info.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/custom_button.dart';
@@ -95,9 +96,9 @@ class _PlaceOrderState extends State<PlaceOrder> {
               children: [
                 _savedAddress != null
                     ? CustomAddressInfo(
-                  saveAdress: _savedAddress,
-                  onTap: _editAddress,
-                )
+                        saveAdress: _savedAddress,
+                        onTap: _editAddress,
+                      )
                     : SizedBox.shrink(),
                 _savedAddress == null
                     ? GestureDetector(
@@ -125,7 +126,10 @@ class _PlaceOrderState extends State<PlaceOrder> {
                   fontWeight: FontWeight.w600,
                 ),
                 Gap(10),
-                customContainer('select payment method', false, 'assets/svgs/downarrow.svg',
+                customContainer(
+                  'select payment method',
+                  false,
+                  'assets/svgs/downarrow.svg',
                 ),
               ],
             ),
