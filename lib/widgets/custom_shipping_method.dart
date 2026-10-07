@@ -19,11 +19,7 @@ class CustomShippingMethod extends StatelessWidget {
           fontWeight: FontWeight.w600,
         ),
         Gap(10),
-        customContainer(
-          'Pickup at store',
-          true,
-          'assets/svgs/downarrow.svg',
-        ),
+        customContainer('Pickup at store', true, 'assets/svgs/downarrow.svg'),
       ],
     );
   }
