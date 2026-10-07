@@ -5,7 +5,12 @@ import 'package:gap/gap.dart';
 import 'custom_text.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.text, required this.image,required this.onTap});
+  const CustomButton({
+    super.key,
+    required this.text,
+    required this.image,
+    required this.onTap,
+  });
   final String text;
   final bool image;
   final Function()? onTap;
@@ -15,13 +20,15 @@ class CustomButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 13,vertical: 15),
+        padding: EdgeInsets.symmetric(horizontal: 13, vertical: 15),
         width: double.infinity,
         color: Color(0xff000000),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            isSvg?SvgPicture.asset('assets/svgs/shopping bag.svg', width: 20):SizedBox.shrink(),
+            isSvg
+                ? SvgPicture.asset('assets/svgs/shopping bag.svg', width: 20)
+                : SizedBox.shrink(),
             Gap(15),
             CustomText(
               text: text.toUpperCase(),
@@ -32,7 +39,6 @@ class CustomButton extends StatelessWidget {
             ),
           ],
         ),
-        
       ),
     );
   }
