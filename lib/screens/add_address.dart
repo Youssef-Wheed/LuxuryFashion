@@ -196,7 +196,6 @@ class _AddAdressState extends State<AddAdress> {
               ),
             ),
 
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 15),
               child: CustomButton(
@@ -213,7 +212,7 @@ class _AddAdressState extends State<AddAdress> {
                       'zipCode': zipCodeController.text,
                       'phone': phoneController.text,
                     };
-                    Navigator.pop(context,data);
+                    Navigator.pop(context, data);
                   } else {
                     return;
                   }
