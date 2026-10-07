@@ -96,12 +96,15 @@ class Home extends StatelessWidget {
                             return GestureDetector(
                               onTap: () {
                                 Navigator.push(
-                                  context,MaterialPageRoute(builder: (c)=>Checkout(
-                                  image: item.image,
-                                  name: item.name,
-                                  price: item.price,
-                                  description: item.description,
-                                )),
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (c) => Checkout(
+                                      image: item.image,
+                                      name: item.name,
+                                      price: item.price,
+                                      description: item.description,
+                                    ),
+                                  ),
                                 );
                               },
                               child: Column(
