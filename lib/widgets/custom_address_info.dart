@@ -17,23 +17,20 @@ class CustomAddressInfo extends StatelessWidget {
       child: Row(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20.0,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
                   text:
-                  "${saveAdress['firstName'] + " " + saveAdress['lastName']}"
-                      .toUpperCase(),
+                      "${saveAdress['firstName'] + " " + saveAdress['lastName']}"
+                          .toUpperCase(),
                   fontSize: 20,
                   color: Color(0xff1A1A1A),
                   fontWeight: FontWeight.w900,
                 ),
                 CustomText(
-                  text:
-                  "${saveAdress['address'] + " " + saveAdress['city']}"
+                  text: "${saveAdress['address'] + " " + saveAdress['city']}"
                       .toUpperCase(),
                   fontSize: 15,
                   color: Color(0xff555555),
@@ -41,8 +38,7 @@ class CustomAddressInfo extends StatelessWidget {
                 ),
                 Gap(6),
                 CustomText(
-                  text:
-                  "${saveAdress['state'] + " " + saveAdress['zipCode']}"
+                  text: "${saveAdress['state'] + " " + saveAdress['zipCode']}"
                       .toUpperCase(),
                   fontSize: 15,
                   color: Color(0xff555555),
@@ -50,8 +46,7 @@ class CustomAddressInfo extends StatelessWidget {
                 ),
                 Gap(6),
                 CustomText(
-                  text: "${saveAdress['phone']}"
-                      .toUpperCase(),
+                  text: "${saveAdress['phone']}".toUpperCase(),
                   fontSize: 15,
                   color: Color(0xff555555),
                   fontWeight: FontWeight.w400,
@@ -61,10 +56,7 @@ class CustomAddressInfo extends StatelessWidget {
             ),
           ),
           Spacer(),
-          SvgPicture.asset(
-            'assets/svgs/arrow.svg',
-            width: 25,
-          ),
+          SvgPicture.asset('assets/svgs/arrow.svg', width: 25),
         ],
       ),
     );
