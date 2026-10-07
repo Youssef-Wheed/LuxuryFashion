@@ -5,7 +5,7 @@ import 'custom_text.dart';
 
 class CustomHeader extends StatelessWidget {
   const CustomHeader({super.key, required this.name});
-final String name;
+  final String name;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,7 +27,6 @@ final String name;
           width: 150,
         ),
         Gap(20),
-
       ],
     );
   }
