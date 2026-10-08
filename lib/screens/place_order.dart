@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:luxury_fashion_app/screens/add_card.dart';
+import 'package:luxury_fashion_app/widgets/custom_card_order.dart';
 import 'package:luxury_fashion_app/widgets/custom_text.dart';
 
 import '../widgets/custom_address_info.dart';
@@ -32,6 +34,7 @@ class PlaceOrder extends StatefulWidget {
 
 class _PlaceOrderState extends State<PlaceOrder> {
   dynamic _savedAddress;
+  dynamic _savedCard;
 
   void _openAddress(context) async {
     final addressData = await Navigator.push(
@@ -54,6 +57,18 @@ class _PlaceOrderState extends State<PlaceOrder> {
     setState(() {
       _savedAddress = newAddress;
     });
+  }
+
+  void _openCard() async {
+    final cardData = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (c) => AddCard()),
+    );
+    if (cardData != null) {
+      setState(() {
+        _savedCard = cardData;
+      });
+    }
   }
 
   @override
@@ -83,12 +98,14 @@ class _PlaceOrderState extends State<PlaceOrder> {
                 color: Color(0xff555555),
               ),
             ),
-            CustomText(
-              text: 'Shipping adress'.toUpperCase(),
-              fontSize: 18,
-              color: Color(0xff888888),
-              fontWeight: FontWeight.w600,
-            ),
+            _savedCard != null && _savedAddress != null
+                ? SizedBox.shrink()
+                : CustomText(
+                    text: 'Shipping adress'.toUpperCase(),
+                    fontSize: 18,
+                    color: Color(0xff888888),
+                    fontWeight: FontWeight.w600,
+                  ),
 
             Gap(15),
             Column(
@@ -115,21 +132,78 @@ class _PlaceOrderState extends State<PlaceOrder> {
                 Gap(30),
 
                 // shipping method
-                CustomShippingMethod(),
+                _savedCard != null && _savedAddress != null
+                    ? SizedBox.shrink()
+                    : CustomShippingMethod(),
                 Gap(30),
 
                 //payment method
-                CustomText(
-                  text: 'Payment method'.toUpperCase(),
-                  fontSize: 18,
-                  color: Color(0xff888888),
-                  fontWeight: FontWeight.w600,
-                ),
-                Gap(10),
-                customContainer(
-                  'select payment method',
-                  false,
-                  'assets/svgs/downarrow.svg',
+                _savedCard != null && _savedAddress != null
+                    ? SizedBox.shrink()
+                    : CustomText(
+                        text: 'Payment method'.toUpperCase(),
+                        fontSize: 18,
+                        color: Color(0xff888888),
+                        fontWeight: FontWeight.w600,
+                      ),
+
+                Gap(20),
+                _savedCard != null
+                    ? Column(
+                        children: [
+                          Divider(color: Colors.grey.shade300),
+                          Gap(20),
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/svgs/Mastercard.svg',
+                                width: 40,
+                              ),
+                              Gap(10),
+                              CustomText(
+                                text: "Master card ending",
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              Gap(10),
+                              CustomText(
+                                text:
+                                    ".... ${_savedCard['number'].toString().substring(_savedCard['number'].length - 2)}",
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              Spacer(),
+                              SvgPicture.asset(
+                                'assets/svgs/arrow.svg',
+                                width: 25,
+                              ),
+                            ],
+                          ),
+                          Gap(20),
+                          Divider(color: Colors.grey.shade300),
+                        ],
+                      )
+                    : GestureDetector(
+                        onTap: _openCard,
+                        child: customContainer(
+                          'select payment method',
+                          false,
+                          'assets/svgs/downarrow.svg',
+                        ),
+                      ),
+                Gap(20),
+                CustomCardOrder(
+                  image: widget.image,
+                  name: widget.name,
+                  price: widget.price,
+                  description: widget.description,
+                  onChanged: (qty){
+                    setState(() {
+
+                    });
+                  },
                 ),
               ],
             ),
