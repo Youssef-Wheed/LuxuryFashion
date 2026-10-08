@@ -12,12 +12,15 @@ class CustomCardOrder extends StatefulWidget {
     required this.price,
     required this.description,
     required this.onChanged,
+    required this.qty,
   });
   final String image;
   final String name;
   final double price;
   final String description;
   final Function(int) onChanged;
+  final int qty;
+
 
   @override
   State<CustomCardOrder> createState() => _CustomCardOrderState();
@@ -25,7 +28,13 @@ class CustomCardOrder extends StatefulWidget {
 
 class _CustomCardOrderState extends State<CustomCardOrder> {
   // ignore: non_constant_identifier_names
-  int number = 1;
+ late int number ;
+ @override
+  void initState() {
+    number = 1;
+    number = widget.qty;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -85,7 +94,7 @@ class _CustomCardOrderState extends State<CustomCardOrder> {
             ),
             Gap(10),
             CustomText(
-              text: "\$ ${widget.price * number}",
+              text: "\$ ${widget.price}",
               fontSize: 22,
               color: Colors.red.shade200,
               fontWeight: FontWeight.bold,
