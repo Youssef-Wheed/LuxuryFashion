@@ -49,6 +49,7 @@ class _CheckoutState extends State<Checkout> {
                   slectedQty = v;
                 });
               },
+              qty: slectedQty,
             ),
             promo(),
             Spacer(),
