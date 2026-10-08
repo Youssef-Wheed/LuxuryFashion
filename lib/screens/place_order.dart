@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -9,6 +10,7 @@ import '../widgets/custom_address_info.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_shipping_method.dart';
+import '../widgets/custom_show_dialog.dart';
 import 'add_address.dart';
 
 class PlaceOrder extends StatefulWidget {
@@ -71,6 +73,14 @@ class _PlaceOrderState extends State<PlaceOrder> {
     }
   }
 
+  late int selectedQty;
+
+  @override
+  void initState() {
+    selectedQty = widget.quantity;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,6 +108,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                 color: Color(0xff555555),
               ),
             ),
+
             _savedCard != null && _savedAddress != null
                 ? SizedBox.shrink()
                 : CustomText(
@@ -117,6 +128,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                         onTap: _editAddress,
                       )
                     : SizedBox.shrink(),
+
                 _savedAddress == null
                     ? GestureDetector(
                         onTap: () {
@@ -129,6 +141,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                         ),
                       )
                     : SizedBox.shrink(),
+
                 Gap(30),
 
                 // shipping method
@@ -193,18 +206,23 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           'assets/svgs/downarrow.svg',
                         ),
                       ),
-                Gap(20),
-                CustomCardOrder(
-                  image: widget.image,
-                  name: widget.name,
-                  price: widget.price,
-                  description: widget.description,
-                  onChanged: (qty){
-                    setState(() {
 
-                    });
-                  },
-                ),
+                Gap(20),
+
+                _savedAddress != null
+                    ? SizedBox.shrink()
+                    : CustomCardOrder(
+                        image: widget.image,
+                        name: widget.name,
+                        price: widget.price,
+                        description: widget.description,
+                        qty: widget.quantity,
+                        onChanged: (qty) {
+                          setState(() {
+                            selectedQty = qty;
+                          });
+                        },
+                      ),
               ],
             ),
             Spacer(),
@@ -222,7 +240,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                     fontWeight: FontWeight.bold,
                   ),
                   CustomText(
-                    text: '\$ ${widget.total}',
+                    text: '\$ ${widget.price * selectedQty}',
                     fontSize: 22,
                     color: Colors.red.shade200,
                     fontWeight: FontWeight.bold,
@@ -231,7 +249,20 @@ class _PlaceOrderState extends State<PlaceOrder> {
               ),
             ),
             Gap(20),
-            CustomButton(text: "Place Order", image: true, onTap: () {}),
+            CustomButton(
+              text: "checkout",
+              image: true,
+              onTap: () {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) {
+                    // Dialog
+                    return CustomShowDialog();
+                  },
+                );
+              },
+            ),
             Gap(20),
           ],
         ),
